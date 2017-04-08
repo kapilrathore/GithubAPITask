@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CommitDetails {
+class CommitDetails: NSObject, NSCoding {
     
     struct Keys {
         static let commit = "commit"
@@ -57,5 +57,21 @@ class CommitDetails {
         } else {
             self.avatar_url = ""
         }
+    }
+    
+    // MARK: - NSCoding
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(name, forKey: Keys.name)
+        aCoder.encode(message, forKey: Keys.message)
+        aCoder.encode(avatar_url, forKey: Keys.avatar_url)
+    }
+    
+    required init(coder unarchiver: NSCoder) {
+        name = unarchiver.decodeObject(forKey: Keys.name) as? String
+        message = unarchiver.decodeObject(forKey: Keys.message) as? String
+        avatar_url = unarchiver.decodeObject(forKey: Keys.avatar_url) as? String
+        
+        super.init()
     }
 }

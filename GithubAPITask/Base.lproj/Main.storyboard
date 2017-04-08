@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EuV-2M-K5d">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EuV-2M-K5d">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="81"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IfF-ZH-M9L" id="Mfb-vm-ZGb">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="81"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gNq-1I-wed">
@@ -73,7 +73,13 @@
                             <outlet property="delegate" destination="Mjo-8y-0Zv" id="JLD-qS-R4s"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Commits" id="CgP-kf-gmw"/>
+                    <navigationItem key="navigationItem" title="Commits" id="CgP-kf-gmw">
+                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="7eu-9i-1fA">
+                            <connections>
+                                <action selector="viewBookmarks:" destination="Mjo-8y-0Zv" id="jeq-nK-Fao"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xqC-Bs-oJn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -96,6 +102,81 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eHr-n7-4O6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-100" y="127.28635682158921"/>
+        </scene>
+        <!--Bookmarks-->
+        <scene sceneID="tdm-hq-K4Q">
+            <objects>
+                <tableViewController storyboardIdentifier="BookmarkVC" id="Hau-qw-MZN" customClass="BookmarksTableViewController" customModule="GithubAPITask" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="pzo-L7-gLP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="commitCell" rowHeight="81" id="DqL-5b-fO3" customClass="CommitsTableViewCell" customModule="GithubAPITask" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="81"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DqL-5b-fO3" id="dUD-n5-GbO">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Amc-DA-699">
+                                            <rect key="frame" x="8" y="8" width="65" height="65"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="65" id="cTo-yg-iQS"/>
+                                                <constraint firstAttribute="width" constant="65" id="vZE-ug-J01"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yd7-cZ-SRG">
+                                            <rect key="frame" x="81" y="8" width="286" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Merge pull request #28662 from diazruy/guides-links\n\nDownplay links in Guides headers" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eYb-Ws-tbs">
+                                            <rect key="frame" x="81" y="31" width="286" height="38"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="38" id="l7Z-tf-wdc"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="eYb-Ws-tbs" firstAttribute="leading" secondItem="Amc-DA-699" secondAttribute="trailing" constant="8" id="1MV-MN-1LT"/>
+                                        <constraint firstAttribute="topMargin" secondItem="Yd7-cZ-SRG" secondAttribute="top" id="33b-vA-zSH"/>
+                                        <constraint firstAttribute="topMargin" secondItem="Amc-DA-699" secondAttribute="top" id="AwJ-GW-aJp"/>
+                                        <constraint firstItem="Amc-DA-699" firstAttribute="centerY" secondItem="dUD-n5-GbO" secondAttribute="centerY" id="FIa-Tz-Wel"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Yd7-cZ-SRG" secondAttribute="trailing" id="Rv2-yZ-1HB"/>
+                                        <constraint firstItem="eYb-Ws-tbs" firstAttribute="top" secondItem="Yd7-cZ-SRG" secondAttribute="bottom" constant="5" id="Ydz-dL-aG8"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="Amc-DA-699" secondAttribute="leading" id="b7d-e2-3YB"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="eYb-Ws-tbs" secondAttribute="trailing" id="glr-if-MUR"/>
+                                        <constraint firstItem="Yd7-cZ-SRG" firstAttribute="leading" secondItem="Amc-DA-699" secondAttribute="trailing" constant="8" id="tMV-U4-Bp4"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="authorName" destination="Yd7-cZ-SRG" id="tU7-jR-8Bt"/>
+                                    <outlet property="avatarImg" destination="Amc-DA-699" id="LRg-rj-JV1"/>
+                                    <outlet property="commitText" destination="eYb-Ws-tbs" id="4WB-i6-6KI"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Hau-qw-MZN" id="3X5-Mj-5MZ"/>
+                            <outlet property="delegate" destination="Hau-qw-MZN" id="f5V-ra-dIN"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Bookmarks" id="lgy-6B-ZjL">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="0CZ-z2-PJi">
+                            <connections>
+                                <action selector="removeAll:" destination="Hau-qw-MZN" id="awU-QM-XHQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mg9-wf-oC2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1586" y="127"/>
         </scene>
     </scenes>
 </document>

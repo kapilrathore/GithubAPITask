@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B85BD8C71E98F0BF00C7AFE9 /* BookmarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BD8C61E98F0BF00C7AFE9 /* BookmarksTableViewController.swift */; };
 		B8A32E361E94673200A860E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A32E351E94673200A860E2 /* AppDelegate.swift */; };
 		B8A32E3B1E94673200A860E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8A32E391E94673200A860E2 /* Main.storyboard */; };
 		B8A32E3D1E94673200A860E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8A32E3C1E94673200A860E2 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B85BD8C61E98F0BF00C7AFE9 /* BookmarksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksTableViewController.swift; sourceTree = "<group>"; };
 		B8A32E321E94673200A860E2 /* GithubAPITask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubAPITask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8A32E351E94673200A860E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8A32E3A1E94673200A860E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				B8A32E351E94673200A860E2 /* AppDelegate.swift */,
 				B8A32E391E94673200A860E2 /* Main.storyboard */,
 				B8A32E4B1E946BCC00A860E2 /* CommitsTableViewController.swift */,
+				B85BD8C61E98F0BF00C7AFE9 /* BookmarksTableViewController.swift */,
 				B8A32E4D1E94737700A860E2 /* CommitDetails.swift */,
 				B8A32E491E946B7800A860E2 /* CommitsTableViewCell.swift */,
 				B8A32E471E94683B00A860E2 /* NetworkOperation.swift */,
@@ -151,6 +154,7 @@
 				B8A32E481E94683B00A860E2 /* NetworkOperation.swift in Sources */,
 				B8A32E361E94673200A860E2 /* AppDelegate.swift in Sources */,
 				B8A32E4E1E94737700A860E2 /* CommitDetails.swift in Sources */,
+				B85BD8C71E98F0BF00C7AFE9 /* BookmarksTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +318,7 @@
 				B8A32E461E94673200A860E2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

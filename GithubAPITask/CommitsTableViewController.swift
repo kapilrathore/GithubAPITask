@@ -8,16 +8,20 @@
 
 import UIKit
 
-class CommitsTableViewController: UITableViewController {
+class CommitsTableViewController: UITableViewController, UISearchResultsUpdating{
+    
+    var searchController: UISearchController!
     
     let loadingView: UIView = UIView()
     let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
     
     var commitDetArr: [CommitDetails] = []
+    var bookmarkedCommitDetArr: [CommitDetails] = []
+    var filterCommitDetArr: [CommitDetails] = []
     var authorCommitDict: [String: [CommitDetails]] = [:]
     var authorArr: [String] = []
     var avatarDict: [String: Data] = [:]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,11 +38,46 @@ class CommitsTableViewController: UITableViewController {
         self.view.addSubview(loadingView)
         actInd.startAnimating()
         
+        // search bar implementaion
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+        
         self.tableView.rowHeight = 81.0
         self.tableView.sectionHeaderHeight = 30.0
         self.tableView.separatorStyle = .none
         
         downloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.bookmarkedCommitDetArr.removeAll()
+        loadData()
+    }
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        filterCommitDetArr = commitDetArr.filter { commitDet in
+            var commitDetName = ""
+            var commitDetMsg = ""
+            
+            if commitDet.name!.lowercased().contains(searchText.lowercased()) == true {
+                commitDetName = commitDet.name!
+            }
+            if commitDet.message!.lowercased().contains(searchText.lowercased()) == true {
+                commitDetMsg = commitDet.message!
+            }
+            
+            let searchString = "\(commitDetName) \(commitDetMsg)"
+            return searchString.lowercased().contains(searchText.lowercased())
+        }
+        
+        tableView.reloadData()
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchText: searchController.searchBar.text!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,18 +93,29 @@ class CommitsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.commitDetArr.count
+        if searchController.isActive && searchController.searchBar.text != "" {
+            return filterCommitDetArr.count
+        }
+        return commitDetArr.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "commitCell", for: indexPath) as! CommitsTableViewCell
         
-        let oneCommitDet = commitDetArr[indexPath.row]
+        let oneCommitDet: CommitDetails
+        
+        if searchController.isActive && searchController.searchBar.text != "" {
+            oneCommitDet = filterCommitDetArr[indexPath.row]
+        } else {
+            oneCommitDet = commitDetArr[indexPath.row]
+        }
+        
         // Configure the cell...
         cell.authorName.text = oneCommitDet.name!
         cell.commitText.text = oneCommitDet.message!
-        cell.avatarImg.image = UIImage(data: avatarDict[oneCommitDet.name!]!)
-        
+        if let avatar = avatarDict[oneCommitDet.name!] {
+            cell.avatarImg.image = UIImage(data: avatar)
+        }
         cell.avatarImg.layer.borderWidth = 1
         cell.avatarImg.layer.masksToBounds = false
         cell.avatarImg.layer.borderColor = UIColor.black.cgColor
@@ -75,11 +125,62 @@ class CommitsTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let oneCommitDet: CommitDetails
+        
+        if searchController.isActive && searchController.searchBar.text != "" {
+            oneCommitDet = filterCommitDetArr[indexPath.row]
+        } else {
+            oneCommitDet = commitDetArr[indexPath.row]
+        }
+        let bookAction = UITableViewRowAction(style: .normal, title: "Bookmark") { (rowAction, indexPath) in
+            // bookmark the row at indexPath here
+            self.bookmarkedCommitDetArr.append(oneCommitDet)
+            self.saveData()
+        }
+        bookAction.backgroundColor = .blue
+        
+        return [bookAction]
+    }
+    
+    @IBAction func viewBookmarks(_ sender: Any) {
+        
+        let bookmarkVC = storyboard?.instantiateViewController(withIdentifier: "BookmarkVC") as? BookmarksTableViewController
+
+        bookmarkVC?.avatarDict = self.avatarDict
+        
+        self.navigationController?.pushViewController(bookmarkVC!, animated: true)
+    }
+
     // Function to download and render the avatar image.
     func downloadImage(_ imageUrl: String) -> Data? {
         let url = URL(string: imageUrl)
         let data = try? Data(contentsOf: url!)
         return data
+    }
+    
+    func saveData() {
+        var filePath: String {
+            let manager = FileManager.default
+            let url = manager.urls(for: .documentDirectory , in: .userDomainMask).first!
+            return url.appendingPathComponent("bookmarks").path
+        }
+        NSKeyedArchiver.archiveRootObject(self.bookmarkedCommitDetArr, toFile: filePath)
+    }
+    
+    
+    
+    func loadData() {
+        var file : String {
+            let manager = FileManager.default
+            let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first!
+            return url.appendingPathComponent("bookmarks").path
+        }
+        if let bookmarkTable = NSKeyedUnarchiver.unarchiveObject(withFile: file) as? [CommitDetails] {
+            for item in bookmarkTable {
+                self.bookmarkedCommitDetArr.append(item)
+            }
+        }
     }
     
     // Download the JSON data and render it on our app's TableView
